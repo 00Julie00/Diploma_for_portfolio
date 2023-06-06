@@ -30,7 +30,7 @@ public class PayCreditCard {
     @AfterEach
     void cleanDB() {
 
-        SQLHelper.databaseCleanUp();
+        //SQLHelper.databaseCleanUp();
     }
 
     @AfterAll
