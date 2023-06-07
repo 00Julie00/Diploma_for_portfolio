@@ -12,6 +12,7 @@
 
 <details>
 <summary> Подробнее о проекте </summary>
+   
 ![image](https://github.com/00Julie00/Diploma_for_portfolio/assets/115406267/76b7da7c-d72a-482a-be5f-9b5a7792d151)
 
 
