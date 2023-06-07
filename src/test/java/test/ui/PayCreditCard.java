@@ -219,7 +219,7 @@ public class PayCreditCard {
     }
 
     @Test
-    @DisplayName("Покупка кредитной картой: заполнение поле владелец русскими буквами" +
+    @DisplayName("Покупка кредитной картой: заполнение поле владелец кириллицей" +
             " остальные поля -валидные данные")
     public void shouldRussianNameInFieldNameWithCredit() {
         paymentPage.buyCreditCard();

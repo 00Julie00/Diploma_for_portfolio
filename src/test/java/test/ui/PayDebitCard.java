@@ -223,7 +223,7 @@ public class PayDebitCard {
     }
 
     @Test
-    @DisplayName("Покупка дебетовой картой: заполнение поля владелец рус буквами" +
+    @DisplayName("Покупка дебетовой картой: заполнение поля владелец кириллицей" +
             " остальные поля - валидные данные")
     public void shouldEnglishNameInFieldNameFormDebit() {
         paymentPage.payDebitCard();
