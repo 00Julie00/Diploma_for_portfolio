@@ -1,5 +1,6 @@
 package test.api;
 
+import data.SQLHelper;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -10,8 +11,9 @@ import org.junit.jupiter.api.Test;
 import data.ApiHelper;
 import data.DataHelper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ApiTest {
-    DataHelper.CardInfo approvedCardInfo = DataHelper.getApprovedCard();
     DataHelper.CardInfo declinedCardInfo = DataHelper.getDeclinedCard();
 
     @BeforeAll
@@ -25,24 +27,38 @@ public class ApiTest {
     @DisplayName("Запрос на покупку по карте со статусом APPROVED")
     @Test
     void shouldApprovePayment() {
-        ApiHelper.payDebitCard((approvedCardInfo));
+        var cardInfo = DataHelper.getApprovedCard();
+        ApiHelper.payDebitCard(cardInfo);
+        var paymentCardData = SQLHelper.getPaymentInfo();
+        assertEquals(200, paymentCardData.getStatus());
     }
 
     @DisplayName("Запрос на кредит по карте со статусом APPROVED")
     @Test
     void shouldApproveCredit() {
-        ApiHelper.payCreditCard(approvedCardInfo);
+        var cardInfo = DataHelper.getApprovedCard();
+        ApiHelper.payCreditCard(cardInfo);
+        var paymentCardData = SQLHelper.getCreditRequestInfo();
+        assertEquals("APPROVED", paymentCardData.getStatus());
+
     }
 
     @DisplayName("Запрос на покупку по карте со статусом DECLINED")
     @Test
     void shouldDeclinePayment() {
-        ApiHelper.createPaymentError(declinedCardInfo);
+        var cardInfo = DataHelper.getDeclinedCard();
+        ApiHelper.payDebitCard(cardInfo);
+        var paymentCardData = SQLHelper.getPaymentInfo();
+        assertEquals("DECLINED", paymentCardData.getStatus());
     }
 
     @DisplayName("Запрос на кредит по карте со статусом DECLINED")
     @Test
     void shouldDeclineCredit() {
-        ApiHelper.createCreditError(declinedCardInfo);
+        var cardInfo = DataHelper.getDeclinedCard();
+        ApiHelper.payCreditCard(cardInfo);
+        var paymentCardData = SQLHelper.getCreditRequestInfo();
+        assertEquals("DECLINED", paymentCardData.getStatus());
     }
+
 }

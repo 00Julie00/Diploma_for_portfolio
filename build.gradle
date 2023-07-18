@@ -12,36 +12,39 @@ allure {
     }
 }
 
-    group 'ru.netology'
-    version '1.0-SNAPSHOT'
+group 'ru.netology'
+version '1.0-SNAPSHOT'
 
-    sourceCompatibility = 11
-    compileJava.options.encoding = "UTF-8"
-    compileTestJava.options.encoding = "UTF-8"
+sourceCompatibility = 11
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
+repositories {
+    mavenCentral()
+    jcenter()
+}
 
-    dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-        testImplementation 'com.codeborne:selenide:6.12.2'
-        testImplementation 'mysql:mysql-connector-java:8.0.29'
-        testImplementation 'com.github.javafaker:javafaker:1.0.2'
-        testImplementation 'io.rest-assured:rest-assured:5.1.1'
-        testImplementation 'org.postgresql:postgresql:42.4.0'
-        testImplementation 'io.qameta.allure:allure-selenide:2.20.1'
-        testImplementation 'commons-dbutils:commons-dbutils:1.7'
-        testImplementation 'io.qameta.allure:allure-assertj:2.12.1'
-        testImplementation 'io.qameta.allure:allure-rest-assured:2.12.1'
-        testImplementation 'com.google.code.gson:gson:2.8.6'
-        compileOnly 'org.projectlombok:lombok:1.18.18'
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'com.codeborne:selenide:6.12.2'
+    testImplementation 'mysql:mysql-connector-java:8.0.29'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'io.rest-assured:rest-assured:5.1.1'
+    testImplementation 'org.postgresql:postgresql:42.4.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.20.1'
+    testImplementation 'commons-dbutils:commons-dbutils:1.7'
+    testImplementation 'io.qameta.allure:allure-assertj:2.12.1'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.12.1'
+    testImplementation 'com.google.code.gson:gson:2.8.6'
+    compileOnly 'org.projectlombok:lombok:1.18.18'
 
-    }
+}
 
-    test {
-        useJUnitPlatform()
-        systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-        systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/app')
-    }
+test {
+    useJUnitPlatform()
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty 'datasource', System.getProperty('db.url')
+    systemProperty 'datasource.user', System.getProperty('db.user')
+    systemProperty 'datasource.password', System.getProperty('db.password')
+
+}

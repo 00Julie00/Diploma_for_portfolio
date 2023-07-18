@@ -53,17 +53,17 @@
  * `docker container ls`
 4. В новой вкладке терминала ввести следующую команду в зависимости от базы данных
 
- * `java -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -jar ./artifacts/aqa-shop.jar` - для MySQL
- * `java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar ./artifacts/aqa-shop.jar` - для PostgreSQL
+ * `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar` - для MySQL
+ * `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar` - для PostgreSQL
 5. Проверить доступность веб-сервиса  по адресу
 
  * `http://localhost:8080/`
  
  ## Запуск автотестов
 1. Для запуска автотестов с "MySQL",  необходимо открыть новую вкладку терминала и ввести следующую команду:
- * `./gradlew test -Dselenide.headless=true Ddb.url=jdbc:mysql://localhost:3306/app --info`
+ * `./gradlew test "-Ddb.url=jdbc:mysql://localhost:3306/app" "-Ddb.username=app" "-Ddb.password=pass"`
 2. Для запуска автотестов с "PostgreSQL",  необходимо открыть новую вкладку терминала и ввести следующую команду:
- * `./gradlew test -Dselenide.headless=true -Ddb.url=jdbc:postgresql://localhost:5432/app --info`
+ * `./gradlew test "-Ddb.url=jdbc:postgresql://localhost:5432/app" "-Ddb.username=app" "-Ddb.password=pass"`
  
 ## Запуск отчета тестирования
 Для запуска и просмотра отчета по результатам тестирования, с помощью "Allure", выполнить по очереди команды:

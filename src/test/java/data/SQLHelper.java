@@ -8,28 +8,30 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class SQLHelper {
-    private static Connection connection;
-    public static QueryRunner runner;
+    public static QueryRunner runner= new QueryRunner();
 
-    @SneakyThrows
-    public static void start() {
-        runner = new QueryRunner();
-        connection = DriverManager.getConnection(System.getProperty("datasource"), "app", "pass");
+    private static String url = System.getProperty("db.url");
+    private static String userName = System.getProperty("db.username");
+    private static String password = System.getProperty("db.password");
+
+    public SQLHelper() {
     }
 
+    @SneakyThrows
+    public static Connection start() {
+        return DriverManager.getConnection(url, userName, password);
+    }
 
     @SneakyThrows
     public static void databaseCleanUp() {
-        start();
-        var deleteFromOrder = "DELETE FROM order_entity;";
-        var deleteFromCredit = "DELETE FROM credit_request_entity;";
-        var deleteFromPayment = "DELETE FROM payment_entity;";
-        runner.update(connection, deleteFromOrder);
-        runner.update(connection, deleteFromCredit);
-        runner.update(connection, deleteFromPayment);
+        var conn = start();
+        runner.execute(conn, "DELETE FROM order_entity");
+        runner.execute(conn, "DELETE FROM payment_entity");
+        runner.execute(conn, "DELETE FROM credit_request_entity");
     }
 
     @Data
@@ -44,9 +46,15 @@ public class SQLHelper {
 
     @SneakyThrows
     public static CreditRequestEntity getCreditRequestInfo() {
-        start();
-        var creditRequestInfo = "SELECT * FROM credit_request_entity ORDER BY created DESC;";
-        return runner.query(connection, creditRequestInfo, new BeanHandler<>(CreditRequestEntity.class));
+        var cardDataSQL = "SELECT * FROM credit_request_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = start()) {
+            var result = runner.query(conn, cardDataSQL,
+                    new BeanHandler<>(CreditRequestEntity.class));
+            return result;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     @Data
@@ -63,9 +71,15 @@ public class SQLHelper {
 
     @SneakyThrows
     public static PaymentEntity getPaymentInfo() {
-        start();
-        var paymentInfo = "SELECT * FROM payment_entity ORDER BY created DESC;";
-        return runner.query(connection, paymentInfo, new BeanHandler<>(PaymentEntity.class));
+        var cardDataSQL = "SELECT * FROM payment_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = start()) {
+            var result = runner.query(conn, cardDataSQL,
+                    new BeanHandler<>(PaymentEntity.class));
+            return result;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     @Data
@@ -80,9 +94,15 @@ public class SQLHelper {
 
     @SneakyThrows
     public static OrderEntity getOrderInfo() {
-        start();
-        var orderInfo = "SELECT * FROM order_entity ORDER BY created DESC;";
-        return runner.query(connection, orderInfo, new BeanHandler<>(OrderEntity.class));
+        var orderEntityDataSQL = "SELECT * FROM order_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = start()) {
+            var result = runner.query(conn, orderEntityDataSQL,
+                    new BeanHandler<>(OrderEntity.class));
+            return result;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 }
 
