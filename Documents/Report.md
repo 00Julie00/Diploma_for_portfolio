@@ -9,13 +9,16 @@
 
 Всего было проведено 50 тест-кейсов. Общий процент успешных тестов: 70,00%.
 
-![img_2.png](img_2.png)
+![image](https://github.com/00Julie00/Diploma_for_portfolio/assets/115406267/b74573bc-e28e-4c37-8e7d-825a668b2720)
 
 ### Разбивка итогов тестирования по серьезности и приоритету:
-![img_3.png](img_3.png)
+
+![image](https://github.com/00Julie00/Diploma_for_portfolio/assets/115406267/3287212d-1b2f-4ec2-a7a7-128df1e73edc)
 
 ### Разбивка итогов тестирования по функциональности:
-![img_4.png](img_4.png)
+
+![image](https://github.com/00Julie00/Diploma_for_portfolio/assets/115406267/79327a43-e1e6-4d81-9a7b-ca7296ec498a)
+
 
 ### Общие итоги:
 
